@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { MdSearch } from "react-icons/md";
 
 const StyledHeader = styled.header`
@@ -136,10 +136,10 @@ const Header = () => {
   return (
     <StyledHeader isDark={isScroll}>
       <div className="container">
-        <div>
+        <Link to={`${process.env.PUBLIC_URL}/discover/popular`}>
           <img src="" alt="" />
           <span className="title"> Movie Library </span>
-        </div>
+        </Link>
         <div className="header-right">
           <ul className="header-nav">
             <li>

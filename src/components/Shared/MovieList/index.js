@@ -31,7 +31,7 @@ const Card = styled.div`
   }
 
   .img {
-    border-radius: 6px;
+    border-radius: 10px;
     width: 100%;
     height: 36rem;
   }
@@ -64,7 +64,10 @@ export default ({ movies }) => {
     <Row>
       {movies.map(movie => (
         <Col key={movie.id}>
-          <Link to={`movie/${movie.id}`} className="link">
+          <Link
+            to={`${process.env.PUBLIC_URL}/discover/movie/${movie.id}`}
+            className="link"
+          >
             <Card className="card">
               <div className="img-wrapper">
                 <img

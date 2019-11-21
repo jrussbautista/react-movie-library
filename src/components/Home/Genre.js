@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import useFetch from "../../hooks/useFetch";
 import { NavLink } from "react-router-dom";
-import Error from "../Error";
+import Error from "../Shared/Error";
 
 const Heading = styled.div`
   font-size: 2.5rem;
