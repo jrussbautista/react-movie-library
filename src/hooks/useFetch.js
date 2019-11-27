@@ -15,11 +15,11 @@ const reducer = (state, action) => {
   }
 };
 
-const useFetch = endpoint => {
+const useFetch = (endpoint, field) => {
   const initialState = {
     status: "loading",
     error: null,
-    datas: []
+    datas: {}
   };
   const [state, dispatch] = useReducer(reducer, initialState);
   const { status, error, datas } = state;

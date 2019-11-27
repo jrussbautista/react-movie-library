@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+import { FaPlay, FaLink } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { fetchMovie } from "../../store/movie/movie.action";
 import Loading from "../Shared/Spinner/Loading";
 import Error from "../Shared/Error";
 import RecommendMovies from "./RecommendMovies";
 import Layout from "../Layout";
 import styled from "styled-components";
-import { FaPlay, FaLink } from "react-icons/fa";
 
 const Container = styled.div`
   max-width: 120rem;
@@ -89,20 +91,17 @@ const MovieContainer = styled.div`
 
 const Movie = () => {
   const { movieId } = useParams();
-  const [status, error, movie] = useFetch(`/movie/${movieId}`);
+  const dispatch = useDispatch();
+  const { movie, isLoading } = useSelector(state => state.movie);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    dispatch(fetchMovie(movieId));
   }, [movieId]);
-
-  if (error) {
-    return <Error />;
-  }
 
   return (
     <Layout>
       <Container>
-        {status === "loading" ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <div>
@@ -126,7 +125,12 @@ const Movie = () => {
                     <div>
                       {movie.genres.length > 0 &&
                         movie.genres.map(genre => (
-                          <span key={genre.id}>{genre.name}</span>
+                          <span
+                            key={genre.id}
+                            style={{ marginRight: "0.5rem" }}
+                          >
+                            {genre.name}
+                          </span>
                         ))}
                     </div>
                   </li>

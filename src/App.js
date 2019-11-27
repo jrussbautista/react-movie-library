@@ -8,10 +8,12 @@ import {
 import Home from "./components/Home";
 import Genre from "./components/Genre";
 import Movie from "./components/Movie";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <Redirect exact from="/" to="/discover/popular" />
         <Route exact path="/discover/:name">

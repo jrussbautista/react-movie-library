@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import useFetch from "../../hooks/useFetch";
-import { NavLink } from "react-router-dom";
-import Error from "../Shared/Error";
+import Error from "./Error";
+import { fetchGenres } from "../../store/genres/genres.action";
 
 const Heading = styled.div`
   font-size: 2.5rem;
@@ -27,6 +29,10 @@ const Genres = styled.div`
     display: block;
     margin-right: 2rem;
 
+    &.active {
+      background-color: var(--color-primary);
+    }
+
     &:hover {
       background-color: var(--color-primary);
     }
@@ -34,17 +40,14 @@ const Genres = styled.div`
 `;
 
 export default () => {
-  const [status, error, datas] = useFetch("/genre/movie/list");
-  const { genres } = datas;
+  const dispatch = useDispatch();
+  const { genres, isLoading } = useSelector(state => state.genres);
   const [totalShow, setTotalShow] = useState(null);
   const sliderEl = useRef();
 
-  const changeTotalShow = () => {
-    if (sliderEl.current !== undefined) {
-      let totalItems = Math.round(sliderEl.current.offsetWidth / 150);
-      setTotalShow(totalItems);
-    }
-  };
+  useEffect(() => {
+    dispatch(fetchGenres());
+  }, []);
 
   useEffect(() => {
     changeTotalShow();
@@ -52,9 +55,12 @@ export default () => {
     return () => window.removeEventListener("resize", changeTotalShow);
   }, []);
 
-  if (error) {
-    return <Error />;
-  }
+  const changeTotalShow = () => {
+    if (sliderEl.current !== undefined) {
+      let totalItems = Math.round(sliderEl.current.offsetWidth / 150);
+      setTotalShow(totalItems);
+    }
+  };
 
   let settings = {
     dots: false,
@@ -70,7 +76,7 @@ export default () => {
   return (
     <div style={{ padding: "20px 0 10px 0" }} ref={sliderEl}>
       <Heading> Genre </Heading>
-      {status === "loading" ? (
+      {isLoading ? (
         <div> Loading ... </div>
       ) : (
         <Slider {...settings}>
@@ -78,6 +84,7 @@ export default () => {
             <Genres key={g.id}>
               <NavLink
                 className="link"
+                activeClassName="active"
                 to={`${process.env.PUBLIC_URL}/genres/${g.name.toLowerCase()}`}
               >
                 {g.name}
