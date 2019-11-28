@@ -71,7 +71,9 @@ export default ({ movie }) => {
       <div
         className="hero-bg"
         style={{
-          backgroundImage: `url("https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}")`
+          backgroundImage: movie.backdrop_path
+            ? `url("https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}")`
+            : ""
         }}
       ></div>
       <div className="hero-info">

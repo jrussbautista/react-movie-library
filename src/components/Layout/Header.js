@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
 import { MdSearch } from "react-icons/md";
+import { useHistory } from "react-router-dom";
 
 const StyledHeader = styled.header`
   height: 7rem;
@@ -117,7 +118,9 @@ const StyledHeader = styled.header`
 `;
 
 const Header = () => {
+  const history = useHistory();
   const [isScroll, setIsScroll] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -131,6 +134,11 @@ const Header = () => {
     } else {
       setIsScroll(false);
     }
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    history.push(`${process.env.PUBLIC_URL}/search/${search}`);
   };
 
   return (
@@ -152,9 +160,13 @@ const Header = () => {
               <NavLink to="/discover/upcoming"> Upcoming </NavLink>
             </li>
           </ul>
-          <form className="form-search">
-            <input type="text" placeholder="Search Movie " />
-            <button className="btn">
+          <form className="form-search" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Search Movie "
+              onChange={e => setSearch(e.target.value)}
+            />
+            <button className="btn" type="submit">
               <MdSearch />
             </button>
           </form>

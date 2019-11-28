@@ -96,7 +96,7 @@ const Movie = () => {
 
   useEffect(() => {
     dispatch(fetchMovie(movieId));
-  }, [movieId]);
+  }, [movieId, dispatch]);
 
   return (
     <Layout>
