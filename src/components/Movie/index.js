@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { FaPlay, FaLink } from "react-icons/fa";
+import { FaPlay, FaLink, FaBookmark } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { fetchMovie } from "../../store/movie/movie.action";
+import {
+  addFave,
+  removeFave,
+  saveFaveMovies
+} from "../../store/favorites/favorites.action";
 import Loading from "../Shared/Spinner/Loading";
 import Error from "../Shared/Error";
 import RecommendMovies from "./RecommendMovies";
@@ -87,16 +92,43 @@ const MovieContainer = styled.div`
       color: var(--color-primary);
     }
   }
+
+  .fave-container {
+    padding: 1rem 0;
+    flex: 1;
+
+    svg {
+      font-size: 3rem;
+      cursor: pointer;
+    }
+  }
 `;
 
 const Movie = () => {
   const { movieId } = useParams();
   const dispatch = useDispatch();
-  const { movie, isLoading } = useSelector(state => state.movie);
+  const { favorites } = useSelector(state => state.favorites);
+  const { movie, isLoading, isError } = useSelector(state => state.movie);
 
   useEffect(() => {
     dispatch(fetchMovie(movieId));
   }, [movieId, dispatch]);
+
+  useEffect(() => {
+    dispatch(saveFaveMovies());
+  }, [favorites]);
+
+  const handleAddFave = () => {
+    dispatch(addFave(movie));
+  };
+
+  const handleRemoveFave = id => {
+    dispatch(removeFave(id));
+  };
+
+  if (isError) {
+    return <Error message="Something went wrong" />;
+  }
 
   return (
     <Layout>
@@ -114,7 +146,21 @@ const Movie = () => {
                 />
               </div>
               <div className="movie-info">
-                <div className="movie-title">{movie.title}</div>
+                <div style={{ display: "flex" }}>
+                  <div className="movie-title" style={{ width: "95%" }}>
+                    {movie.title}
+                  </div>
+                  <div className="fave-container">
+                    {favorites.find(favorite => favorite.id === movie.id) ? (
+                      <FaBookmark
+                        onClick={() => handleRemoveFave(movie.id)}
+                        color="var(--color-primary)"
+                      />
+                    ) : (
+                      <FaBookmark onClick={handleAddFave} color="#fff" />
+                    )}
+                  </div>
+                </div>
                 <div className="movie-rating">
                   {movie.vote_average}/ 10 Rating
                 </div>

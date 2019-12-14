@@ -10,6 +10,7 @@ import Genre from "./components/Genre";
 import Movie from "./components/Movie";
 import Search from "./components/Search";
 import ScrollToTop from "./components/ScrollToTop";
+import Favorites from "./components/Favorites";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route exact path="/search/:keyword">
           <Search />
+        </Route>
+        <Route exact path="/favorites">
+          <Favorites />
         </Route>
       </Switch>
     </Router>

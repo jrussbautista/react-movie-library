@@ -1,19 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ReactComponent as Logo } from "../../../images/logo.svg";
 
 const Row = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   flex-wrap: wrap;
   margin: 3rem 0;
+  grid-gap: 2rem;
+  padding: 0 2rem;
 `;
 
 const Col = styled.div`
-  max-width: 25%;
-  flex-basis: 25%;
-  padding: 0 1rem;
-  margin-bottom: 2rem;
-
   &:hover {
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
@@ -28,6 +27,12 @@ const Col = styled.div`
 const Card = styled.div`
   .img-wrapper {
     position: relative;
+
+    svg {
+      height: 36rem;
+      width: 100%;
+      fill: var(--color-primary);
+    }
   }
 
   .img {
@@ -70,11 +75,15 @@ export default ({ movies }) => {
           >
             <Card className="card">
               <div className="img-wrapper">
-                <img
-                  className="img"
-                  src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
-                  alt={movie.title}
-                />
+                {movie.poster_path ? (
+                  <img
+                    className="img"
+                    src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                ) : (
+                  <Logo />
+                )}
               </div>
               <div className="info">
                 <div className="rating">{movie.vote_average}/10</div>

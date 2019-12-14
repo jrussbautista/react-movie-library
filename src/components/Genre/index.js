@@ -22,7 +22,7 @@ const Container = styled.div`
 const Genre = () => {
   const dispatch = useDispatch();
   const { genre } = useSelector(state => state.movies);
-  const { movies, isLoading } = genre;
+  const { movies, isLoading, isError } = genre;
   const { name } = useParams();
   const page = usePage();
 
@@ -34,6 +34,10 @@ const Genre = () => {
   useEffect(() => {
     fetchGenresInfo();
   }, [name, page, dispatch]);
+
+  if (isError) {
+    return <Error message="Something went wrong" />;
+  }
 
   return (
     <Layout>

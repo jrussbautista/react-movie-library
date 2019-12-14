@@ -3,7 +3,8 @@ import * as types from "./movies.types";
 const initialState = {
   discover: { isLoading: true },
   search: { isLoading: true },
-  genre: { isLoading: true }
+  genre: { isLoading: true },
+  recommend: { isLoading: true }
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [action.name]: { ...state[action.name], isLoading: false }
+      };
+    case types.FETCH_MOVIES_ERROR:
+      return {
+        ...state,
+        [action.name]: { ...state[action.name], isError: true }
       };
     case types.FETCH_MOVIES_SUCCESS:
       return {

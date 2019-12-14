@@ -159,6 +159,9 @@ const Header = () => {
             <li>
               <NavLink to="/discover/upcoming"> Upcoming </NavLink>
             </li>
+            <li>
+              <NavLink to="/favorites"> Favorites </NavLink>
+            </li>
           </ul>
           <form className="form-search" onSubmit={handleSubmit}>
             <input

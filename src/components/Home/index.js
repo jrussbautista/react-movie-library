@@ -24,7 +24,7 @@ const Home = () => {
   const page = usePage();
   const dispatch = useDispatch();
   const { discover } = useSelector(state => state.movies);
-  const { isLoading, movies } = discover;
+  const { isLoading, movies, isError } = discover;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +32,10 @@ const Home = () => {
   }, [name, page, dispatch]);
 
   const title = name.charAt(0).toUpperCase() + name.substring(1);
+
+  if (isError) {
+    return <Error message="Something went wrong" />;
+  }
 
   return (
     <Layout>

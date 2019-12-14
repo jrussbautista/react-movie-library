@@ -16,9 +16,9 @@ export const fetchMovies = (name, page) => async dispatch => {
       payload: data,
       name: "discover"
     });
-    dispatch({ type: types.FETCH_MOVIES_END });
+    dispatch({ type: types.FETCH_MOVIES_END, name: "discover" });
   } catch (error) {
-    console.log(error);
+    dispatch({ type: types.FETCH_MOVIES_ERROR, name: "discover" });
   }
 };
 
@@ -36,7 +36,7 @@ export const fetchSearchMovies = (keyword, page) => async dispatch => {
     });
     dispatch({ type: types.FETCH_MOVIES_END, name: "search" });
   } catch (error) {
-    console.log(error);
+    dispatch({ type: types.FETCH_MOVIES_ERROR, name: "search" });
   }
 };
 
@@ -57,6 +57,22 @@ export const fetchGenreMovies = (name, page) => async (dispatch, getState) => {
     });
     dispatch({ type: types.FETCH_MOVIES_END, name: "genre" });
   } catch (error) {
-    console.log(error);
+    dispatch({ type: types.FETCH_MOVIES_ERROR, name: "genre" });
+  }
+};
+
+export const fetchRecommendedMovies = id => async (dispatch, getState) => {
+  try {
+    dispatch({ type: types.FETCH_MOVIES_START, name: "recommend" });
+    const res = await movieAPI.get(`/movie/${id}/recommendations`);
+    const { data } = res;
+    dispatch({
+      type: types.FETCH_MOVIES_SUCCESS,
+      payload: data,
+      name: "recommend"
+    });
+    dispatch({ type: types.FETCH_MOVIES_END, name: "recommend" });
+  } catch (error) {
+    dispatch({ type: types.FETCH_MOVIES_ERROR, name: "recommend" });
   }
 };

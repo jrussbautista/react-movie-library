@@ -41,13 +41,13 @@ const Genres = styled.div`
 
 export default () => {
   const dispatch = useDispatch();
-  const { genres, isLoading } = useSelector(state => state.genres);
+  const { genres, isLoading, isError } = useSelector(state => state.genres);
   const [totalShow, setTotalShow] = useState(null);
   const sliderEl = useRef();
 
   useEffect(() => {
     dispatch(fetchGenres());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     changeTotalShow();
@@ -72,6 +72,10 @@ export default () => {
     slidesToShow: totalShow,
     slidesToScroll: 1
   };
+
+  if (isError) {
+    return <Error message="Something went wrong" />;
+  }
 
   return (
     <div style={{ padding: "20px 0 10px 0" }} ref={sliderEl}>
