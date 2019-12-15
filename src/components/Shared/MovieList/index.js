@@ -39,6 +39,10 @@ const Card = styled.div`
     border-radius: 10px;
     width: 100%;
     height: 36rem;
+
+    @media ${props => props.theme.mediaQueries.medium} {
+      object-fit: cover;
+    }
   }
 
   .info {

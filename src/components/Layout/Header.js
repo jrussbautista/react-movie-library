@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState, useRef } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { MdSearch } from "react-icons/md";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import Hamburger from "../Shared/Icons/Hamburger";
 
 const StyledHeader = styled.header`
   height: 7rem;
@@ -24,17 +25,78 @@ const StyledHeader = styled.header`
     max-width: 120rem;
     margin: 0 auto;
     height: 100%;
+
+    @media ${props => props.theme.mediaQueries.largest} {
+      max-width: 100%;
+      padding: 0 2rem;
+    }
   }
 
   .header-right {
     flex: 1;
     display: flex;
     justify-content: flex-end;
+
+    @media ${props => props.theme.mediaQueries.medium} {
+      background: #1d1d21;
+      width: 60%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      right: 0;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      z-index: 100;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 2rem 0;
+    }
+
+    &.sidebar-open {
+      transform: translateX(0);
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+  }
+
+  .header-mobile {
+    display: none;
+    flex: 1;
+    justify-content: flex-end;
+
+    svg {
+      cursor: pointer;
+      transform: rotate(180deg);
+      fill: #fff;
+      display: block;
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+    @media ${props => props.theme.mediaQueries.medium} {
+      display: flex;
+    }
   }
 
   .header-nav {
     display: flex;
     align-items: center;
+
+    @media ${props => props.theme.mediaQueries.medium} {
+      flex-direction: column;
+      order: 2;
+      align-items: flex-start;
+      padding: 1rem 2rem;
+    }
 
     .active {
       color: #fff;
@@ -42,7 +104,7 @@ const StyledHeader = styled.header`
       &:after {
         content: "";
         position: absolute;
-        bottom: -15px;
+        bottom: -1.5rem;
         left: 50%;
         transform: translateX(-50%);
         width: 1rem;
@@ -64,6 +126,11 @@ const StyledHeader = styled.header`
       a {
         color: #bdbdbd;
       }
+
+      @media ${props => props.theme.mediaQueries.medium} {
+        margin: 1rem 0;
+        font-size: 2rem;
+      }
     }
   }
 
@@ -82,6 +149,10 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     margin-left: 2rem;
+
+    @media ${props => props.theme.mediaQueries.medium} {
+      margin: 0 2rem;
+    }
 
     input {
       padding: 0 1.5rem;
@@ -121,11 +192,25 @@ const Header = () => {
   const history = useHistory();
   const [isScroll, setIsScroll] = useState(false);
   const [search, setSearch] = useState("");
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const modalRef = useRef();
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  //close sidebar when click outside
+  const handleClickOutside = e => {
+    if (e.target.classList.contains("overlay")) {
+      setIsOpenSidebar(false);
+    }
+  };
 
   // change navbar dark theme  when scroll
   const handleScroll = e => {
@@ -148,7 +233,13 @@ const Header = () => {
           <img src="" alt="" />
           <span className="title"> Movie Library </span>
         </Link>
-        <div className="header-right">
+        <div className="header-mobile">
+          <div onClick={() => setIsOpenSidebar(true)}>
+            <Hamburger />
+          </div>
+        </div>
+        {isOpenSidebar && <div className="overlay"></div>}
+        <div className={`header-right ${isOpenSidebar ? "sidebar-open" : ""}`}>
           <ul className="header-nav">
             <li>
               <NavLink to="/discover/popular"> Popular </NavLink>

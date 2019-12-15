@@ -34,6 +34,10 @@ const Hero = styled.div`
     margin: 0 auto;
     display: flex;
     align-items: center;
+
+    @media ${props => props.theme.mediaQueries.medium} {
+      max-width: 100%;
+    }
   }
 
   .hero-title {
@@ -42,8 +46,13 @@ const Hero = styled.div`
   }
 
   .hero-main {
-    padding-left: 6rem;
+    padding-left: 2rem;
     width: 50%;
+
+    @media ${props => props.theme.mediaQueries.medium} {
+      width: 100%;
+      padding: 0 2rem;
+    }
   }
 
   .rating {

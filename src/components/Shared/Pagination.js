@@ -11,6 +11,7 @@ const StyledPaginate = styled.div`
     justify-content: center;
     align-items: center;
     list-style: none;
+    flex-wrap: wrap;
 
     li {
       padding: 1rem 2rem;

@@ -60,9 +60,20 @@ const MovieContainer = styled.div`
   .movie-img-container {
     flex-basis: 30%;
 
+    @media ${props => props.theme.mediaQueries.medium} {
+      flex-basis: 100%;
+      padding: 3rem;
+    }
+
     .movie-img {
       width: 100%;
       border-radius: 15px;
+      object-fit: contain;
+      overflow: hidden;
+
+      @media ${props => props.theme.mediaQueries.medium} {
+        height: 40rem;
+      }
     }
   }
 
@@ -70,6 +81,7 @@ const MovieContainer = styled.div`
     display: flex;
     align-items: center;
     margin: 2rem 0;
+    flex-wrap: wrap;
 
     .btn {
       width: 20rem;
@@ -83,6 +95,10 @@ const MovieContainer = styled.div`
 
       &:not(:last-child) {
         margin-right: 2rem;
+      }
+
+      @media ${props => props.theme.mediaQueries.medium} {
+        width: 15rem;
       }
     }
 

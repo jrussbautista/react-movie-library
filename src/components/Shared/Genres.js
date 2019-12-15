@@ -78,25 +78,29 @@ export default () => {
   }
 
   return (
-    <div style={{ padding: "20px 0 10px 0" }} ref={sliderEl}>
+    <>
       <Heading> Genre </Heading>
-      {isLoading ? (
-        <div> Loading ... </div>
-      ) : (
-        <Slider {...settings}>
-          {genres.map(g => (
-            <Genres key={g.id}>
-              <NavLink
-                className="link"
-                activeClassName="active"
-                to={`${process.env.PUBLIC_URL}/genres/${g.name.toLowerCase()}`}
-              >
-                {g.name}
-              </NavLink>
-            </Genres>
-          ))}
-        </Slider>
-      )}
-    </div>
+      <div style={{ padding: "2rem 4rem" }} ref={sliderEl}>
+        {isLoading ? (
+          <div> Loading ... </div>
+        ) : (
+          <Slider {...settings}>
+            {genres.map(g => (
+              <Genres key={g.id}>
+                <NavLink
+                  className="link"
+                  activeClassName="active"
+                  to={`${
+                    process.env.PUBLIC_URL
+                  }/genres/${g.name.toLowerCase()}`}
+                >
+                  {g.name}
+                </NavLink>
+              </Genres>
+            ))}
+          </Slider>
+        )}
+      </div>
+    </>
   );
 };
