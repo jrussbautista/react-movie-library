@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from "../../../images/logo.svg";
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   flex-wrap: wrap;
   margin: 3rem 0;
   grid-gap: 2rem;
