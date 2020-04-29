@@ -7,7 +7,7 @@ import { fetchMovie } from "../../store/movie/movie.action";
 import {
   addFave,
   removeFave,
-  saveFaveMovies
+  saveFaveMovies,
 } from "../../store/favorites/favorites.action";
 import Loading from "../Shared/Spinner/Loading";
 import Error from "../Shared/Error";
@@ -28,6 +28,7 @@ const MovieContainer = styled.div`
   .movie-info {
     flex: 1;
     padding: 0 3rem;
+    overflow: hidden;
   }
 
   .movie-title {
@@ -60,7 +61,7 @@ const MovieContainer = styled.div`
   .movie-img-container {
     flex-basis: 30%;
 
-    @media ${props => props.theme.mediaQueries.medium} {
+    @media ${(props) => props.theme.mediaQueries.medium} {
       flex-basis: 100%;
       padding: 3rem;
     }
@@ -71,7 +72,7 @@ const MovieContainer = styled.div`
       object-fit: contain;
       overflow: hidden;
 
-      @media ${props => props.theme.mediaQueries.medium} {
+      @media ${(props) => props.theme.mediaQueries.medium} {
         height: 40rem;
       }
     }
@@ -97,7 +98,7 @@ const MovieContainer = styled.div`
         margin-right: 2rem;
       }
 
-      @media ${props => props.theme.mediaQueries.medium} {
+      @media ${(props) => props.theme.mediaQueries.medium} {
         width: 15rem;
       }
     }
@@ -123,8 +124,8 @@ const MovieContainer = styled.div`
 const Movie = () => {
   const { movieId } = useParams();
   const dispatch = useDispatch();
-  const { favorites } = useSelector(state => state.favorites);
-  const { movie, isLoading, isError } = useSelector(state => state.movie);
+  const { favorites } = useSelector((state) => state.favorites);
+  const { movie, isLoading, isError } = useSelector((state) => state.movie);
 
   useEffect(() => {
     dispatch(fetchMovie(movieId));
@@ -138,7 +139,7 @@ const Movie = () => {
     dispatch(addFave(movie));
   };
 
-  const handleRemoveFave = id => {
+  const handleRemoveFave = (id) => {
     dispatch(removeFave(id));
   };
 
@@ -167,7 +168,7 @@ const Movie = () => {
                     {movie.title}
                   </div>
                   <div className="fave-container">
-                    {favorites.find(favorite => favorite.id === movie.id) ? (
+                    {favorites.find((favorite) => favorite.id === movie.id) ? (
                       <FaBookmark
                         onClick={() => handleRemoveFave(movie.id)}
                         color="var(--color-primary)"
@@ -186,7 +187,7 @@ const Movie = () => {
                     <div className="movie-details-text"> Genre </div>
                     <div>
                       {movie.genres.length > 0 &&
-                        movie.genres.map(genre => (
+                        movie.genres.map((genre) => (
                           <span
                             key={genre.id}
                             style={{ marginRight: "0.5rem" }}
