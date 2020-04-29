@@ -10,6 +10,14 @@ const Row = styled.div`
   margin: 3rem 0;
   grid-gap: 2rem;
   padding: 0 2rem;
+
+  @media ${(props) => props.theme.mediaQueries.small} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media ${(props) => props.theme.mediaQueries.extraSmall} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Col = styled.div`
@@ -40,7 +48,11 @@ const Card = styled.div`
     width: 100%;
     height: 36rem;
 
-    @media ${props => props.theme.mediaQueries.medium} {
+    @media ${(props) => props.theme.mediaQueries.small} {
+      height: 30rem;
+    }
+
+    @media ${(props) => props.theme.mediaQueries.medium} {
       object-fit: cover;
     }
   }
@@ -71,7 +83,7 @@ const Card = styled.div`
 export default ({ movies }) => {
   return (
     <Row>
-      {movies.map(movie => (
+      {movies.map((movie) => (
         <Col key={movie.id}>
           <Link
             to={`${process.env.PUBLIC_URL}/discover/movie/${movie.id}`}
