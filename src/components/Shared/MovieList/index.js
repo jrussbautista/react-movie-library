@@ -49,7 +49,7 @@ const Card = styled.div`
     height: 36rem;
 
     @media ${(props) => props.theme.mediaQueries.small} {
-      height: 30rem;
+      height: 25rem;
     }
 
     @media ${(props) => props.theme.mediaQueries.medium} {

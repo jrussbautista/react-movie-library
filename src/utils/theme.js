@@ -5,8 +5,8 @@ const theme = {
     light: "#fff",
   },
   mediaQueries: {
-    extraSmall: "only screen and (max-width: 26em)",
-    small: "only screen and (max-width: 32.5em)",
+    extraSmall: "only screen and (max-width: 24em)",
+    small: "only screen and (max-width: 30.5em)",
     medium: "only screen and (max-width: 56.25em)",
     large: "only screen and (max-width: 80em)",
     larger: "only screen and (max-width: 90em)",
