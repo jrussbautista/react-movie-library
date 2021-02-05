@@ -15,6 +15,7 @@
 - React
 - Redux
 - Styled Components
+- Netlify (hosting)
 
 ## Requirements
 
